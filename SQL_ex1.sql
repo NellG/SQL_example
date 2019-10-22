@@ -43,4 +43,3 @@ where field.psn in ('P001', 'P008', 'P012', 'P125', 'P304', 'P419')
 -- due to typos in qc data, remove entries where the qc batch number does not match the machine batch number
 and (mach.batch = qc.batch or mach.batch is null or qc.batch is null)
 order by ops.group, field.psn asc
-  
