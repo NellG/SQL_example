@@ -1,7 +1,7 @@
--- script to pull process data for a certain part on a subset of fielded vehicles
+-- script to pull process data for a certain part on a subset of fielded products
 select distinct
-  field.vsn as "Vehicle_SN",
-  field.psn as "Part_SN", 
+  field.psn as "Product_SN",
+  field.ptsn as "Part_SN", 
   ops.group as "Group",
   ops.position as "Position", 
   -- insert batch number from table most likely to have correct formatting
@@ -38,8 +38,8 @@ from schema.field_hardware_table field
 inner join schema.operations_data_table ops on field.psn = ops.psn
 left join schema.machining_data_table mach on ops.group = mach.group
 left join schema.quality_data_table qc on ops.group = qc.group
--- relevant subset of fielded vehicles
-where field.vsn in ('V001', 'V008', 'V012', 'V125', 'V304', 'V419')
+-- desired subset of fielded products
+where field.psn in ('P001', 'P008', 'P012', 'P125', 'P304', 'P419')
 -- due to typos in qc data, remove entries where the qc batch number does not match the machine batch number
 and (mach.batch = qc.batch or mach.batch is null or qc.batch is null)
 order by ops.group, field.psn asc
